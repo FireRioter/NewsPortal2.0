@@ -11,7 +11,7 @@ class Author(models.Model):
     def update_rating(self):
         posts_rating = Post.objects.filter(author=self).aggregate(pr=Coalesce(Sum('rating'), 0))['pr']
         comments_rating = Comment.objects.filter(user=self.user).aggregate(cr=Coalesce(Sum('rating'), 0))['cr']
-        posts_comment_rating = Comment.objects.filter(posts__author=self).aggregate(pcr=Coalesce(Sum('rating'), 0))['pcr']
+        posts_comment_rating = Comment.objects.filter(post__author=self).aggregate(pcr=Coalesce(Sum('rating'), 0))['pcr']
 
         print(posts_rating)
         print('_______________')
